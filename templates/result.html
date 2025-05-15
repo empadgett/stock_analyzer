@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Stock Price</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
+</head>
+<body>
+  <div class="content">
+    <div class="stock-info">
+      <h1>Current price of {{ ticker }}:</h1>
+      <p>${{ '{:.2f}'.format(price) }}</p>
+    </div>
+    </div>
+</body>
+</html>

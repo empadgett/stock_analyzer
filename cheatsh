@@ -1,0 +1,48 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import yfinance as yf
+from datetime import datetime, timedelta
+
+# Define the ticker and time period
+ticker = 'SOXX'
+end_date = datetime.now()
+start_date = end_date - timedelta(days=180)  # 6 months of data
+
+# Fetch the daily data
+data = yf.download(ticker, start=start_date, end=end_date)
+
+# Calculate the price levels
+last_price = data['Close'][-1]
+levels = [
+    220.75,  # Price 3 Standard Deviations Resistance
+    219.48,  # Pivot Point 3rd Level Resistance
+    219,     # Price 2 Standard Deviations Resistance
+    217.57,  # Pivot Point 2nd Level Resistance
+    216.72,  # Price 1 Standard Deviation Resistance
+    214.39,  # Pivot Point 1st Resistance Point
+    212.49,  # Additional resistance level
+    last_price,  # Last price
+    209.31,  # Pivot Point 1st Support Point
+    207.4,   # Pivot Point 2nd Support Point
+    205.7,   # Price 1 Standard Deviation Support
+    204.22,  # Pivot Point 3rd Support Point
+    203.42,  # Price 2 Standard Deviations Support
+    201.67   # Price 3 Standard Deviations Support
+]
+
+# Create a bar chart
+plt.figure(figsize=(10, 6))
+plt.barh(np.arange(len(levels)), levels, color='skyblue')
+
+# Add horizontal lines at each price level
+for level in levels:
+    plt.axhline(y=levels.index(level), color='red', linestyle='--')
+
+# Set y-ticks and labels
+plt.yticks(np.arange(len(levels)), [f'Level {i+1}' for i in range(len(levels))])
+plt.xlabel('Price Levels')
+plt.title(f'Price Levels for {ticker} (Last Price: {last_price:.2f})')
+plt.grid(axis='x')
+
+# Show the plot
+plt.show()
